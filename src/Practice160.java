@@ -31,25 +31,27 @@ public class Practice160 {
         int numb11 = 2122134;
 
         PhoneBook phoneBookObj = new PhoneBook();
-        phoneBookObj.smartAddToBook(name1, numb1);
-        phoneBookObj.smartAddToBook(name2, numb2);
-        phoneBookObj.smartAddToBook(name1, numb3);
-        phoneBookObj.smartAddToBook(name3, numb4);
-        phoneBookObj.smartAddToBook(name4, numb5);
-        phoneBookObj.smartAddToBook(name4, numb6);
-        phoneBookObj.smartAddToBook(name5, numb7);
-        phoneBookObj.smartAddToBook(name5, numb8);
-        phoneBookObj.smartAddToBook(name4, numb9);
-        phoneBookObj.smartAddToBook(name5, numb10);
-        phoneBookObj.smartAddToBook(name4, numb11);
-        System.out.println(phoneBookObj.phoneBook.entrySet());
-        phoneBookObj.showSortedBook();
+        HashMap <String, ArrayList<Integer>> emptyPhBook = new HashMap<>();
+        HashMap <String, ArrayList<Integer>> filledPhBook = phoneBookObj.smartAddToBook(name1, numb1, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name2, numb2, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name1, numb3, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name3, numb4, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name4, numb5, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name4, numb6, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name5, numb7, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name5, numb8, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name4, numb9, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name5, numb10, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name4, numb11, emptyPhBook);
+        System.out.println(filledPhBook.entrySet());
+        phoneBookObj.showSortedBook(filledPhBook);
     }
 }
 
 class PhoneBook {
-    HashMap <String, ArrayList<Integer>> phoneBook = new HashMap<>();
-    void smartAddToBook (String name, int number) {
+    //HashMap <String, ArrayList<Integer>> phoneBook = new HashMap<>();
+
+    HashMap <String, ArrayList<Integer>> smartAddToBook (String name, int number, HashMap <String, ArrayList<Integer>> phoneBook) {
         if (phoneBook.containsKey(name)) {
             ArrayList <Integer> numbersPhBook = new ArrayList<>(phoneBook.get(name));
             numbersPhBook.add(number);
@@ -60,8 +62,9 @@ class PhoneBook {
             numbersPhBook.add(number);
             phoneBook.put(name, numbersPhBook);
         }
+        return phoneBook;
     }
-    void showSortedBook () {
+    LinkedHashMap showSortedBook (HashMap <String, ArrayList<Integer>> phoneBook) {
         ArrayList <ArrayList<Integer>> phBookValues = new ArrayList<>(phoneBook.values());
         LinkedHashMap <String, ArrayList<Integer>> sortedPhBook = new LinkedHashMap<>();
         for (int index = 0; index < phBookValues.size() + index; index++) {
@@ -76,7 +79,7 @@ class PhoneBook {
             for (String key: phoneBook.keySet()) {
                 if (phoneBook.get(key).equals(phBookValues.get(indexOfmaxNumbersPerson))) {
                     System.out.printf(key + "=" + phoneBook.get(key) + " ");
-                    sortedPhBook.smart
+
                 }
             }
             phBookValues.remove(indexOfmaxNumbersPerson);
