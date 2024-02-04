@@ -40,7 +40,11 @@ public class Practice160 {
         System.out.println("Наша книга до сортировки:\n" + filledPhBook);
         LinkedHashMap <String, ArrayList <Integer>> sortedPhBook = new LinkedHashMap<>();
         sortedPhBook = phoneBookObj.sortMyBook(filledPhBook);
-        System.out.println("Наша книга после сортировки:\n" + sortedPhBook);
+        System.out.println("Наша книга после сортировки(с LinkedHashMap):\n" + sortedPhBook);
+        phoneBookObj.showSortedBook(filledPhBook); //если в задании имеется в виду, что вывод должен быть из именно HashMap без LinkedHashMap
+        // то метод showSortedBook просто делает вывод с сортировкой
+        // в идеале хотелось решить задачу, изменив хэш у метода HashMap, чтобы хэш был равен количеству телефонов у человека
+        // чтобы его вывод был упорядочен по хэшу - по количеству телефонов в нашем случае, но я не смог этого добиться =)
     }
 }
 
@@ -80,5 +84,27 @@ class PhoneBook {
         }
         return sortedPhBook;
     }
+
+    void showSortedBook (HashMap <String, ArrayList<Integer>> phoneBook) {
+        ArrayList <ArrayList<Integer>> phBookValues = new ArrayList<>(phoneBook.values());
+        System.out.println("Вывод отсортированной книги(не исользуя LinkedHashMap): ");
+        for (int index = 0; index < phBookValues.size() + index; index++) {
+            int maxNumbersPerson = phBookValues.getFirst().size();
+            int indexOfmaxNumbersPerson = 0;
+            for (int i = 0; i < phBookValues.size(); i++) {
+                if (maxNumbersPerson < phBookValues.get(i).size()) {
+                    maxNumbersPerson = phBookValues.get(i).size();
+                    indexOfmaxNumbersPerson = i;
+                }
+            }
+            for (String key: phoneBook.keySet()) {
+                if (phoneBook.get(key).equals(phBookValues.get(indexOfmaxNumbersPerson))) {
+                    System.out.printf(key + "=" + phoneBook.get(key) + " ");
+                }
+            }
+            phBookValues.remove(indexOfmaxNumbersPerson);
+        }
+    }
+
 }
 
