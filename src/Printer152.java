@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Printer152 {
     public static void main(String[] args) {
-        PhoneBook phoneBook = new PhoneBook();
+        PhoneBook1 phoneBook = new PhoneBook1();
         String name1 = "Ivanov";
         String name2 = "Petrov";
         String name3 = "Petrov";
@@ -22,7 +22,7 @@ public class Printer152 {
     }
 }
 
-class PhoneBook {
+class PhoneBook1 {
     private static HashMap<String, ArrayList<Integer>> phoneBook = new HashMap<>();
 
     public void add(String name, Integer phoneNum) {
