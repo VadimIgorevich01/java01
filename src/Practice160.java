@@ -1,18 +1,11 @@
 import java.util.*;
 
-// введены имена и телефоны
-// программа пакует их в хэшМэп
-// с учетом повторяющихся имен, ключ - имя
-
-// вывод. создать массив массивов из значений.
-// каждый элемент этого массва имеет свою длину
-// сделать сортировку по этой длине, от большего к меньшему
-// создаем цикл вывода. колво итераций равно колву элементов
-// в итерации саут получаем ключ из мэпа по значению элемента массива, получаем значение по найденому ключу
+//Реализуйте структуру телефонной книги с помощью HashMap.
+//Программа также должна учитывать, что в во входной структуре будут повторяющиеся имена с разными телефонами, 
+//их необходимо считать, как одного человека с разными телефонами. 
+//Вывод должен быть отсортирован по убыванию числа телефонов.
 public class Practice160 {
     public static void main(String[] args) {
-        System.out.println("test");
-
         String name1 = "Anton"; //2 тел
         String name2 = "Oleg"; //1 тел
         String name3 = "Artur"; //1 тел
@@ -32,29 +25,27 @@ public class Practice160 {
 
         PhoneBook phoneBookObj = new PhoneBook();
         HashMap <String, ArrayList<Integer>> emptyPhBook = new HashMap<>();
-        HashMap <String, ArrayList<Integer>> filledPhBook = phoneBookObj.smartAddToBookHashMap(name1, numb1, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name2, numb2, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name1, numb3, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name3, numb4, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name4, numb5, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name4, numb6, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name5, numb7, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name5, numb8, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name4, numb9, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name5, numb10, emptyPhBook);
-        filledPhBook = phoneBookObj.smartAddToBookHashMap(name4, numb11, emptyPhBook);
-        System.out.println(filledPhBook.entrySet());
-        phoneBookObj.showSortedBook(filledPhBook);
+        HashMap <String, ArrayList<Integer>> filledPhBook = phoneBookObj.smartAddToBook(name1, numb1, emptyPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name2, numb2, filledPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name1, numb3, filledPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name3, numb4, filledPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name4, numb5, filledPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name4, numb6, filledPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name5, numb7, filledPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name5, numb8, filledPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name4, numb9, filledPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name5, numb10, filledPhBook);
+        filledPhBook = phoneBookObj.smartAddToBook(name4, numb11, filledPhBook);
+
+        System.out.println("Наша книга до сортировки:\n" + filledPhBook);
         LinkedHashMap <String, ArrayList <Integer>> sortedPhBook = new LinkedHashMap<>();
-        sortedPhBook = phoneBookObj.showSortedBook(filledPhBook);
-        System.out.println(sortedPhBook);
+        sortedPhBook = phoneBookObj.sortMyBook(filledPhBook);
+        System.out.println("Наша книга после сортировки:\n" + sortedPhBook);
     }
 }
 
 class PhoneBook {
-    //HashMap <String, ArrayList<Integer>> phoneBook = new HashMap<>();
-
-    HashMap <String, ArrayList<Integer>> smartAddToBookHashMap (String name, int number, HashMap <String, ArrayList<Integer>> phoneBook) {
+    HashMap <String, ArrayList<Integer>> smartAddToBook (String name, int number, HashMap <String, ArrayList<Integer>> phoneBook) {
         if (phoneBook.containsKey(name)) {
             ArrayList <Integer> numbersPhBook = new ArrayList<>(phoneBook.get(name));
             numbersPhBook.add(number);
@@ -67,22 +58,8 @@ class PhoneBook {
         }
         return phoneBook;
     }
-
-//    LinkedHashMap <String, ArrayList<Integer>> smartAddToBookLinked (String name, int number, LinkedHashMap <String, ArrayList<Integer>> phoneBook) {
-//        if (phoneBook.containsKey(name)) {
-//            ArrayList <Integer> numbersPhBook = new ArrayList<>(phoneBook.get(name));
-//            numbersPhBook.add(number);
-//            phoneBook.put(name, numbersPhBook);
-//        }
-//        else {
-//            ArrayList <Integer> numbersPhBook = new ArrayList<>();
-//            numbersPhBook.add(number);
-//            phoneBook.put(name, numbersPhBook);
-//        }
-//        return phoneBook;
-//    }
     
-    LinkedHashMap showSortedBook (HashMap <String, ArrayList<Integer>> phoneBook) {
+    LinkedHashMap <String, ArrayList<Integer>> sortMyBook (HashMap <String, ArrayList<Integer>> phoneBook) {
         ArrayList <ArrayList<Integer>> phBookValues = new ArrayList<>(phoneBook.values());
         LinkedHashMap <String, ArrayList<Integer>> sortedPhBook = new LinkedHashMap<>();
         for (int index = 0; index < phBookValues.size() + index; index++) {
@@ -96,14 +73,11 @@ class PhoneBook {
             }
             for (String key: phoneBook.keySet()) {
                 if (phoneBook.get(key).equals(phBookValues.get(indexOfmaxNumbersPerson))) {
-                    //System.out.printf(key + "=" + phoneBook.get(key) + " ");
                     sortedPhBook.put(key, phoneBook.get(key));
                 }
             }
             phBookValues.remove(indexOfmaxNumbersPerson);
         }
-//        System.out.println();
-//        System.out.println(phBookValues);
         return sortedPhBook;
     }
 }
